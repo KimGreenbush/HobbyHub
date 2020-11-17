@@ -6,9 +6,8 @@ namespace Csharp_belt.Models
     {
         public MyContext(DbContextOptions options) : base(options) { }
 
-        // DON'T FORGET TO COME BACK AND CHANGE NAMES
         public DbSet<User> Users { get; set; }
-        public DbSet<Activity> Activities { get; set; } //CHANGE
-        public DbSet<UserActivity> UserActivities { get; set; } //CHANGE
+        public DbSet<Hobby> Hobbies { get; set; }
+        public DbSet<UserHobby> UserHobbies { get; set; }
     }
 }

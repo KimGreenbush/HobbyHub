@@ -4,18 +4,16 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Csharp_belt.Models
 {
-    public class UserOtherRel
+    public class UserHobby
     {
-        //CHANGE ALL NON USER NAMES
-
         [Key]
-        public int UserOtherRelId { get; set; }
+        public int UserHobbyId { get; set; }
 
         public int UserId { get; set; }
-        public User Participant { get; set; }
+        public User Hobbyist { get; set; }
 
-        public int OtherRelId { get; set; }
-        public Activity OtherRel { get; set; }
+        public int HobbyId { get; set; }
+        public Hobby Hobby { get; set; }
 
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public DateTime UpdatedAt { get; set; } = DateTime.Now;

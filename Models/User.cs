@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Csharp_belt.Extensions;
 
 namespace Csharp_belt.Models
 {
@@ -12,16 +11,23 @@ namespace Csharp_belt.Models
         public int UserId { get; set; }
 
         [Required]
-        [MinLength(2, ErrorMessage = "Name must be longer than 2 letters")]
-        public string Name { get; set; }
+        [Display(Name = "First Name")]
+        [MinLength(2, ErrorMessage = "Firstame must be lat least 2 letters")]
+        public string FirstName { get; set; }
 
         [Required]
-        [EmailAddress(ErrorMessage = "Please enter a valid email")]
-        public string Email { get; set; }
+        [Display(Name = "Last Name")]
+        [MinLength(2, ErrorMessage = "Lastame must be at least 2 letters")]
+        public string LastName { get; set; }
+
+        [Required]
+        [MinLength(3, ErrorMessage = "Username must be at least 2 letters")]
+        [MaxLength(15, ErrorMessage = "Username must be no more than 15 letters")]
+        [Display(Name = "Userame")]
+        public string Username { get; set; }
 
         [Required]
         [MinLength(8, ErrorMessage = "Passwrord must at least 8 characters")]
-        [PasswordValidation]
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
@@ -31,7 +37,7 @@ namespace Csharp_belt.Models
         [Display(Name = "Confirm PW")]
         public string Confirm { get; set; }
 
-        public List<UserActivity> Activities { get; set; }
+        public List<UserHobby> Hobbies { get; set; }
 
         public DateTime CreatedAt { get; set; } = DateTime.Now;
 

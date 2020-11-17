@@ -16,7 +16,6 @@ namespace Csharp_belt.Controllers
             _context = context;
         }
 
-        //CHANGE ALL TABLE/QUERY NAMES
 
         [HttpGet("")]
         public RedirectToActionResult ToIndex()
@@ -38,33 +37,33 @@ namespace Csharp_belt.Controllers
             if (UserId != null)
             {
                 ViewBag.User = _context.Users.FirstOrDefault(a => a.UserId == (HttpContext.Session.GetInt32("UserId")));
-                List<Activity> Activities = _context.Activities.Include(a => a.Participants).ThenInclude(b => b.Participant).Include(a => a.Creator).OrderBy(a => a.Date).ToList();
-                return View("Home", Activities);
+                List<Hobby> Hobbies = _context.Hobbies.Include(a => a.Hobbyists).ThenInclude(b => b.Hobbyist).Include(a => a.Creator).OrderBy(a => a.Date).ToList();
+                return View("Home", Hobbies);
             }
             return RedirectToAction("Index");
         }
 
-        [HttpGet("new")] //edit  route displaying form
-        public IActionResult NewActivity()
+        [HttpGet("Hobby/New")] //route displaying form
+        public IActionResult NewHobby()
         {
             int? UserId = HttpContext.Session.GetInt32("UserId");
             if (UserId != null)
             {
-                Activity Activity = new Activity { };
-                return View("NewActivity", Activity);
+                Hobby Hobby = new Hobby { };
+                return View("NewHobby", Hobby);
             }
             return RedirectToAction("Index");
         }
 
-        [HttpGet("activity/{ActivityId}")] // display one from table
-        public IActionResult Activity(int ActivityId)
+        [HttpGet("Hobby/{HobbyId}")] // display one from table
+        public IActionResult Hobby(int HobbyId)
         {
             int? UserId = HttpContext.Session.GetInt32("UserId");
             if (UserId != null)
             {
                 ViewBag.UserId = (int)HttpContext.Session.GetInt32("UserId");
-                Activity Activity = _context.Activities.Include(a => a.Participants).ThenInclude(b => b.Participant).Include(a => a.Creator).FirstOrDefault(w => w.ActivityId == ActivityId);
-                return View("Activity", Activity);
+                Hobby Hobby = _context.Hobbies.Include(a => a.Hobbyists).ThenInclude(b => b.Hobbyist).Include(a => a.Creator).FirstOrDefault(w => w.HobbyId == HobbyId);
+                return View("Hobby", Hobby);
             }
             return RedirectToAction("Index");
         }

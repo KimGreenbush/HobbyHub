@@ -17,43 +17,42 @@ namespace Csharp_belt.Controllers
         }
 
         // CRUD OPS
-        // CHANGE  QUERY/TABLE NAMES
 
-        [HttpGet("delete/{ActivityId}")] // DELETE ONE
-        public RedirectToActionResult Delete(int ActivityId)
-        {
-            Activity toDelete = _context.Activities.FirstOrDefault(w => w.ActivityId == ActivityId);
-            _context.Remove(toDelete);
-            _context.SaveChanges();
-            return RedirectToAction("Dashboard", "Home");
-        }
+        // [HttpGet("delete/{ActivityId}")] // DELETE ONE
+        // public RedirectToActionResult Delete(int ActivityId)
+        // {
+        //     Activity toDelete = _context.Activities.FirstOrDefault(w => w.ActivityId == ActivityId);
+        //     _context.Remove(toDelete);
+        //     _context.SaveChanges();
+        //     return RedirectToAction("Dashboard", "Home");
+        // }
 
-        [HttpGet("join/{ActivityId}")] //ADD/REMOVE RELATIONSHIP
-        public RedirectToActionResult Join(int ActivityId)
+        [HttpGet("join/{HobbyId}")] //ADD/REMOVE RELATIONSHIP
+        public RedirectToActionResult Join(int HobbyId)
         {
             int UserId = (int)HttpContext.Session.GetInt32("UserId");
-            UserActivity ActivityList = _context.UserActivities.Include(b => b.Participant).FirstOrDefault(a => a.Participant.UserId == UserId && a.Activity.ActivityId == ActivityId);
-            if (ActivityList == null)
+            UserHobbyy HobbyList = _context.UserHobbies.Include(b => b.Hobbyist).FirstOrDefault(a => a.Hobbyist.UserId == UserId && a.Hobby.HobbyId == ActivityId);
+            if (HobbyList == null)
             {
-                UserActivity NewActivity = new UserActivity { };
+                UserHobby NewHobby = new UserHobby { };
                 User ExistingUser = _context.Users.FirstOrDefault(u => u.UserId == UserId);
-                Activity ExistingActivity = _context.Activities.FirstOrDefault(w => w.ActivityId == ActivityId);
-                NewActivity.Participant = ExistingUser;
-                NewActivity.Activity = ExistingActivity;
-                _context.Add(NewActivity);
+                Hobby ExistingHobby = _context.Hobbies.FirstOrDefault(w => w.HobbyId == HobbyId);
+                NewHobby.Hobbyist = ExistingUser;
+                NewHobby.Hobby = ExistingActivity;
+                _context.Add(NewHobby);
             }
             else
             {
-                _context.Remove(ActivityList);
+                _context.Remove(HobbyList);
             }
             _context.SaveChanges();
             return RedirectToAction("Dashboard", "Home");
         }
 
         [HttpPost("new")] //CREATE NEW/SAVE TO DB
-        public IActionResult CreateActivity(Activity fromForm)
+        public IActionResult CreateHobbyy(Hobby fromForm)
         {
-            Activity Activity = new Activity { };
+            Hobby Hobby = new Hobby { };
             if (ModelState.IsValid)
             {
                 int UserId = (int)HttpContext.Session.GetInt32("UserId");
@@ -65,19 +64,19 @@ namespace Csharp_belt.Controllers
                 _context.Add(fromForm);
                 _context.SaveChanges();
 
-                UserActivity NewActivity = new UserActivity { };
+                UserHobby NewHobby = new UserHobby { };
 
-                Activity ExistingActivity = _context.Activities.FirstOrDefault(w => w.ActivityId == fromForm.ActivityId);
+                Hobby ExistingHobby = _context.Hobbies.FirstOrDefault(w => w.HobbyId == fromForm.HobbyId);
 
-                NewActivity.Participant = ExistingUser;
+                NewHobby.Hobbyist = ExistingUser;
 
-                NewActivity.Activity = ExistingActivity;
-                _context.Add(NewActivity);
+                NewHobbyy.Hobby = ExistingHobby;
+                _context.Add(NewHobby);
                 _context.SaveChanges();
-                int ActivityId = ExistingActivity.ActivityId;
-                return RedirectToAction("Activity", "Home", new { ActivityId = ActivityId });
+                int HobbyId = ExistingHobby.HobbyId;
+                return RedirectToAction("Hobby", "Home", new { HobbyyId = HobbyId });
             }
-            return View("NewActivity", Activity);
+            return View("NewHobby", Hobby);
         }
     }
 }
