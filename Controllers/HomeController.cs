@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
@@ -30,14 +31,14 @@ namespace Csharp_belt.Controllers
             return View("Index", FormWrapper);
         }
 
-        [HttpGet("home")] //dashboard route for geting all and displaying particular table values
+        [HttpGet("Hobby")] //dashboard route for geting all and displaying particular table values
         public IActionResult Dashboard()
         {
             int? UserId = HttpContext.Session.GetInt32("UserId");
             if (UserId != null)
             {
                 ViewBag.User = _context.Users.FirstOrDefault(a => a.UserId == (HttpContext.Session.GetInt32("UserId")));
-                List<Hobby> Hobbies = _context.Hobbies.Include(a => a.Hobbyists).ThenInclude(b => b.Hobbyist).Include(a => a.Creator).OrderBy(a => a.Date).ToList();
+                List<Hobby> Hobbies = _context.Hobbies.Include(a => a.Hobbyists).ThenInclude(b => b.Hobbyist).Include(a => a.Creator).ToList();
                 return View("Home", Hobbies);
             }
             return RedirectToAction("Index");
@@ -64,6 +65,19 @@ namespace Csharp_belt.Controllers
                 ViewBag.UserId = (int)HttpContext.Session.GetInt32("UserId");
                 Hobby Hobby = _context.Hobbies.Include(a => a.Hobbyists).ThenInclude(b => b.Hobbyist).Include(a => a.Creator).FirstOrDefault(w => w.HobbyId == HobbyId);
                 return View("Hobby", Hobby);
+            }
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet("Hobby/Edit/{HobbyId}")] // edit/update form
+        public IActionResult EditHobby(int HobbyId)
+        {
+            int? UserId = HttpContext.Session.GetInt32("UserId");
+            if (UserId != null)
+            {
+                ViewBag.UserId = (int)HttpContext.Session.GetInt32("UserId");
+                Hobby Hobby = _context.Hobbies.FirstOrDefault(w => w.HobbyId == HobbyId);
+                return View("EditHobby", Hobby);
             }
             return RedirectToAction("Index");
         }

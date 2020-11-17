@@ -1,0 +1,41 @@
+@using Csharp_belt.Models
+@model Hobby
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="/css/style_otherrel.css">
+</head>
+
+<body>
+    <div id="container">
+
+        <div class="hobby">
+            <h2>@Model.Name</h2>
+            <p>Description: </p>
+            <blockquote>@Model.Description</blockquote>
+            <a asp-action="EditHobby" asp-controller="Home" asp-route-ActivityId="@Model.HobbyId"><button>Edit Hobby</button></a>
+
+            <p>@Model.Name Enthusiasts:</p>
+            <ul>
+                @foreach (var hobbyist in @Model.Hobbyists)
+                {
+                    <li>@hobbyist.Hobbyist.FirstName</li>
+                }
+            </ul>
+
+                @if (@Model.Hobbyists.Any(a => a.Hobbyist.UserId != ViewBag.UserId))
+                    {
+                        <td><a asp-action="Join" asp-controller="Action" asp-route-ActivityId="@Model.HobbyId"><button>Add to Hobbies</button></a></td>
+                    }
+
+        </div>
+    </div>
+</body>
+
+</html>
