@@ -19,7 +19,10 @@
             <h2>@Model.Name</h2>
             <p>Description: </p>
             <blockquote>@Model.Description</blockquote>
-            <a asp-action="EditHobby" asp-controller="Home" asp-route-ActivityId="@Model.HobbyId"><button>Edit Hobby</button></a>
+            @if (@Model.Creator.UserId == ViewBag.UserId)
+                {
+                    <a asp-action="EditHobby" asp-controller="Home" asp-route-ActivityId="@Model.HobbyId"><button>Edit Hobby</button></a>
+                }
 
             <p>@Model.Name Enthusiasts:</p>
             <ul>
@@ -29,7 +32,11 @@
                 }
             </ul>
 
-                @if (@Model.Hobbyists.Any(a => a.Hobbyist.UserId != ViewBag.UserId))
+                @if (@Model.Hobbyists.Any(a => a.Hobbyist.UserId == ViewBag.UserId))
+                    {
+                        <p></p>
+                    }
+                    else
                     {
                         <td><a asp-action="Join" asp-controller="Action" asp-route-ActivityId="@Model.HobbyId"><button>Add to Hobbies</button></a></td>
                     }

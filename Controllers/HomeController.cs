@@ -19,12 +19,6 @@ namespace Csharp_belt.Controllers
 
 
         [HttpGet("")]
-        public RedirectToActionResult ToIndex()
-        {
-            return RedirectToAction("Index");
-        }
-
-        [HttpGet("signin")]
         public ViewResult Index()
         {
             RegLogWrapper FormWrapper = new RegLogWrapper { };

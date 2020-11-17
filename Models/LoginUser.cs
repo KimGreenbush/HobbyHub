@@ -7,11 +7,11 @@ namespace Csharp_belt.Models
     {
         [Required]
         [Display(Name = "Username")]
-        public string Username { get; set; }
+        public string LoginUsername { get; set; }
 
         [Required]
         [Display(Name = "Password")]
         [DataType(DataType.Password)]
-        public string UserPassword { get; set; }
+        public string LoginPassword { get; set; }
     }
 }

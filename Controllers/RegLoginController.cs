@@ -24,7 +24,7 @@ namespace Csharp_belt.Controllers
             {
                 if (_context.Users.Any(u => u.Username == fromForm.Username)) //u.____/fromForm.____ is based on input field
                 {
-                    ModelState.AddModelError("RegisterUsername", "Username taken");
+                    ModelState.AddModelError("Username", "Username taken");
                     return View("../Home/Index", FormWrapper);
                 }
                 else
@@ -46,14 +46,14 @@ namespace Csharp_belt.Controllers
             RegLogWrapper FormWrapper = new RegLogWrapper { };
             if (ModelState.IsValid)
             {
-                User ExistingUser = _context.Users.FirstOrDefault(u => u.Username == fromForm.Username);
+                User ExistingUser = _context.Users.FirstOrDefault(u => u.Username == fromForm.LoginUsername);
                 if (ExistingUser == null)
                 {
                     ModelState.AddModelError("LoginUsername", "Invalid Username");
                     return View("../Home/Index", FormWrapper);
                 }
                 PasswordHasher<LoginUser> Hasher = new PasswordHasher<LoginUser>();
-                PasswordVerificationResult result = Hasher.VerifyHashedPassword(fromForm, ExistingUser.Password, fromForm.UserPassword);
+                PasswordVerificationResult result = Hasher.VerifyHashedPassword(fromForm, ExistingUser.Password, fromForm.LoginPassword);
                 if (result == 0)
                 {
                     ModelState.AddModelError("LoginEmail", "Password error");

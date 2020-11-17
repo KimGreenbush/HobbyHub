@@ -12,22 +12,22 @@ namespace Csharp_belt.Models
 
         [Required]
         [Display(Name = "First Name")]
-        [MinLength(2, ErrorMessage = "Firstame must be lat least 2 letters")]
+        [MinLength(2, ErrorMessage = "Firstname must be lat least 2 letters")]
         public string FirstName { get; set; }
 
         [Required]
         [Display(Name = "Last Name")]
-        [MinLength(2, ErrorMessage = "Lastame must be at least 2 letters")]
+        [MinLength(2, ErrorMessage = "Lastname must be at least 2 letters")]
         public string LastName { get; set; }
 
         [Required]
-        [MinLength(3, ErrorMessage = "Username must be at least 2 letters")]
+        [MinLength(3, ErrorMessage = "Username must be at least 3 letters")]
         [MaxLength(15, ErrorMessage = "Username must be no more than 15 letters")]
-        [Display(Name = "Userame")]
+        [Display(Name = "Username")]
         public string Username { get; set; }
 
         [Required]
-        [MinLength(8, ErrorMessage = "Passwrord must at least 8 characters")]
+        [MinLength(8, ErrorMessage = "Password must at least 8 characters")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
