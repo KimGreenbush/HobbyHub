@@ -20,6 +20,7 @@ namespace Csharp_belt.Models
         public string Email { get; set; }
 
         [Required]
+        [MinLength(8, ErrorMessage = "Passwrord must at least 8 characters")]
         [PasswordValidation]
         [DataType(DataType.Password)]
         public string Password { get; set; }

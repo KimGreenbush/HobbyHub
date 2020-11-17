@@ -48,11 +48,29 @@ namespace Csharp_belt.Extensions
             }
             else
             {
-                Regex PassVal = new Regex("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*?[#?!@$%^&*-]){8,}$");
-                MatchCollection match = PassVal.Matches((string)value);
-                if (match.Count < 3)
+                Regex PassLowerVal = new Regex("^(?=.*[a-z])$");
+                Regex PassUppererVal = new Regex("^(?=.*[A-Z])$");
+                Regex PassNumVal = new Regex("^(?=.*[0-9])$");
+                Regex PassSpecialVal = new Regex("^(?=.*?[#?!@$%^&*-])$");
+                MatchCollection match1 = PassLowerVal.Matches((string)value);
+                MatchCollection match2 = PassUppererVal.Matches((string)value);
+                MatchCollection match3 = PassNumVal.Matches((string)value);
+                MatchCollection match4 = PassSpecialVal.Matches((string)value);
+                if (match1.Count < 1)
                 {
-                    return new ValidationResult("Password must include an upper-, lowercase, number, and special character");
+                    return new ValidationResult("Password must include a lowercase character");
+                }
+                else if (match2.Count < 1)
+                {
+                    return new ValidationResult("Password must include an upperercase character");
+                }
+                else if (match3.Count < 1)
+                {
+                    return new ValidationResult("Password must include a number");
+                }
+                else if (match4.Count < 1)
+                {
+                    return new ValidationResult("Password must include a special character");
                 }
                 else
                 {
